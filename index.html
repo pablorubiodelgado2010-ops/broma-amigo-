@@ -2,83 +2,70 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regalo Especial</title>
     <style>
-        /* Estilos de la página inicial */
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #ffffff;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; background-color: white; overflow: hidden;
         }
-
-        #contenedor {
-            text-align: center;
-            cursor: pointer;
+        #btn-regalo { cursor: pointer; text-align: center; }
+        img { max-width: 80%; border-radius: 20px; }
+        
+        /* Pantalla de la broma */
+        .pantalla-broma {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: black;
+            color: white; justify-content: center; align-items: center;
+            flex-direction: column; cursor: none;
         }
-
-        img {
-            max-width: 85%;
-            max-height: 60vh;
-            border: 10px solid #eee;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            color: #333;
-            margin-top: 25px;
-            font-size: 24px;
-        }
-
-        /* Clase para el modo broma (pantalla negra y sin ratón) */
-        .negro-total {
-            background-color: black !important;
-            cursor: none !important;
-        }
-
-        .oculto {
-            display: none !important;
-        }
+        .foto-caca { width: 300px; margin-bottom: 20px; }
+        h2 { font-family: sans-serif; text-align: center; }
     </style>
 </head>
-<body onclick="activarBroma()">
+<body>
 
-    <div id="contenedor">
-        <img src="https://r.jina.ai/i/0f3c5b8b8b8b4b8b8b8b8b8b8b8b8b8b" alt="Día del padre">
-        <h1>🎁 ¡Haz clic para abrir tu regalo del Día del Padre! 🎁</h1>
+    <div id="btn-regalo" onclick="lanzarBroma()">
+        <img src="https://i.imgur.com/gK9x2oF.jpeg" alt="Papa">
+        <h1>🎁 ¡CLIC AQUÍ PARA TU REGALO! 🎁</h1>
     </div>
 
-    <audio id="audioBroma" src="https://www.myinstants.com/media/sounds/fart-meme-sound.mp3" loop></audio>
+    <div id="broma" class="pantalla-broma">
+        <img src="https://i.imgur.com/6S6rG6r.png" class="foto-caca">
+        <h2>💩 ¡TU REGALO ES EL INSTAGRAM DE ESTE FAMOSO! 💩</h2>
+    </div>
 
     <script>
-        function activarBroma() {
-            const doc = document.documentElement;
-            const audio = document.getElementById("audioBroma");
-            const contenedor = document.getElementById("contenedor");
-
-            // 1. Activar Pantalla Completa
-            if (doc.requestFullscreen) {
-                doc.requestFullscreen();
-            } else if (doc.webkitRequestFullscreen) { /* Safari */
-                doc.webkitRequestFullscreen();
+        function lanzarBroma() {
+            // 1. Pantalla completa
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
             }
 
-            // 2. Poner fondo negro y ocultar todo lo demás
-            document.body.classList.add("negro-total");
-            contenedor.classList.add("oculto");
+            // 2. Cambiar interfaz
+            document.getElementById('btn-regalo').style.display = 'none';
+            document.getElementById('broma').style.display = 'flex';
 
-            // 3. Reproducir sonido al máximo (del navegador)
-            audio.volume = 1.0;
-            audio.play();
+            // 3. AUDIO REFORZADO (Gain Node)
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioCtx.createBufferSource();
+            
+            // Sonido de ejemplo (puedes cambiar esta URL por tu MP3)
+            fetch('https://www.myinstants.com/media/sounds/fart-meme-sound.mp3')
+                .then(response => response.arrayBuffer())
+                .then(data => audioCtx.decodeAudioData(data))
+                .then(buffer => {
+                    source.buffer = buffer;
+                    source.loop = true;
+
+                    // Creamos el "amplificador" de volumen
+                    const gainNode = audioCtx.createGain();
+                    gainNode.gain.value = 5; // <--- Sube este número para saturar más el sonido
+
+                    source.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    source.start(0);
+                });
         }
     </script>
 </body>
