@@ -2,70 +2,99 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Regalo Especial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡SORPRESA!</title>
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center;
-            align-items: center; background-color: white; overflow: hidden;
+            align-items: center; background-color: #f0f0f0; overflow: hidden;
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Fuente divertida */
         }
-        #btn-regalo { cursor: pointer; text-align: center; }
-        img { max-width: 80%; border-radius: 20px; }
-        
-        /* Pantalla de la broma */
-        .pantalla-broma {
+
+        /* Pantalla Inicial */
+        #pantalla-inicio { text-align: center; cursor: pointer; }
+        .texto-inicial {
+            font-size: 3em;
+            color: #ff4500; /* Naranja fuerte */
+            text-shadow: 3px 3px #000;
+            animation: pulse 1s infinite alternate; /* Animación de pulsación */
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        /* Pantalla de la Broma (Se activa al clicar) */
+        #pantalla-broma {
             display: none; position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; background: black;
             color: white; justify-content: center; align-items: center;
             flex-direction: column; cursor: none;
         }
-        .foto-caca { width: 300px; margin-bottom: 20px; }
-        h2 { font-family: sans-serif; text-align: center; }
+        .foto-meme { 
+            max-width: 90%; 
+            max-height: 80vh; 
+            border: 5px solid yellow; 
+            box-shadow: 0 0 30px yellow;
+        }
+        h2 { 
+            margin-top: 20px; 
+            text-align: center; 
+            color: lime; /* Verde chillón */
+            font-size: 2em;
+            text-shadow: 2px 2px black;
+        }
     </style>
 </head>
-<body>
+<body onclick="lanzarBroma()">
 
-    <div id="btn-regalo" onclick="lanzarBroma()">
-        <img src="https://i.imgur.com/gK9x2oF.jpeg" alt="Papa">
-        <h1>🎁 ¡CLIC AQUÍ PARA TU REGALO! 🎁</h1>
+    <div id="pantalla-inicio">
+        <div class="texto-inicial">¡¡CLIC AQUÍ!!</div>
+        <h1>🎁 Descubre tu regalo sorpresa 🎁</h1>
     </div>
 
-    <div id="broma" class="pantalla-broma">
-        <img src="https://i.imgur.com/6S6rG6r.png" class="foto-caca">
-        <h2>💩 ¡TU REGALO ES EL INSTAGRAM DE ESTE FAMOSO! 💩</h2>
+    <div id="pantalla-broma">
+        <img src="https://i.imgur.com/QhC88dM.jpeg" class="foto-meme" alt="Meme molesto">
+        <h2>😂 ¡LO SIENTO, PERO ASÍ ES LA VIDA! 😂</h2>
     </div>
 
     <script>
+        let bromaActivada = false;
+
         function lanzarBroma() {
+            if (bromaActivada) return;
+            bromaActivada = true;
+
             // 1. Pantalla completa
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            }
+            const doc = document.documentElement;
+            if (doc.requestFullscreen) doc.requestFullscreen();
 
             // 2. Cambiar interfaz
-            document.getElementById('btn-regalo').style.display = 'none';
-            document.getElementById('broma').style.display = 'flex';
+            document.getElementById('pantalla-inicio').style.display = 'none';
+            document.getElementById('pantalla-broma').style.display = 'flex';
 
-            // 3. AUDIO REFORZADO (Gain Node)
+            // 3. AUDIO REFORZADO (Web Audio API para volumen máximo y molesto)
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const source = audioCtx.createBufferSource();
             
-            // Sonido de ejemplo (puedes cambiar esta URL por tu MP3)
-            fetch('https://www.myinstants.com/media/sounds/fart-meme-sound.mp3')
+            // Sonido de Bocina de Aire (Air Horn) - MUY MOLESTO
+            fetch('https://www.myinstants.com/media/sounds/airhorn.mp3') // Enlace directo al MP3
                 .then(response => response.arrayBuffer())
                 .then(data => audioCtx.decodeAudioData(data))
                 .then(buffer => {
+                    const source = audioCtx.createBufferSource();
                     source.buffer = buffer;
-                    source.loop = true;
+                    source.loop = true; // Que no pare de sonar
 
-                    // Creamos el "amplificador" de volumen
+                    // Nodo de ganancia (Amplificador)
                     const gainNode = audioCtx.createGain();
-                    gainNode.gain.value = 5; // <--- Sube este número para saturar más el sonido
+                    gainNode.gain.value = 15; // ¡¡MUY ALTO Y SATURADO!! (CUIDADO CON ESTE VALOR)
 
                     source.connect(gainNode);
                     gainNode.connect(audioCtx.destination);
                     source.start(0);
-                });
+                })
+                .catch(e => console.error('Error al cargar o reproducir el audio:', e)); // Para depuración
         }
     </script>
 </body>
