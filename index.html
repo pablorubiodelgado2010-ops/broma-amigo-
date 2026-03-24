@@ -2,81 +2,49 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>¡TU REGALO!</title>
     <style>
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center;
-            align-items: center; background-color: #f0f0f0; overflow: hidden;
-            font-family: 'Arial Black', sans-serif;
+        body {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            cursor: pointer;
+            font-family: sans-serif;
         }
-
-        /* Pantalla Inicial */
-        #pantalla-inicio { text-align: center; cursor: pointer; }
-        .caja-regalo {
-            font-size: 100px;
-            transition: transform 0.2s;
+        /* Clase que se activa al hacer clic */
+        .pantalla-negra {
+            background-color: black !important;
+            cursor: none !important;
         }
-        .caja-regalo:hover { transform: scale(1.1); }
-
-        /* Pantalla de la Broma (Se activa al clicar) */
-        #pantalla-broma {
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: black;
-            color: white; justify-content: center; align-items: center;
-            flex-direction: column; cursor: none;
-        }
-        .foto-gato { width: 80%; max-width: 600px; border: 5px solid white; }
-        h2 { margin-top: 20px; text-align: center; color: yellow; }
+        h1 { color: #333; }
     </style>
 </head>
-<body onclick="lanzarBroma()">
+<body onclick="ejecutarBroma()">
 
-    <div id="pantalla-inicio">
-        <div class="caja-regalo">🎁</div>
-        <h1>¡HAZ CLIC PARA ABRIR TU REGALO!</h1>
-    </div>
+    <h1 id="mensaje">¡Haz clic para ver el regalo! 🎁</h1>
 
-    <div id="pantalla-broma">
-        <img src="https://lh3.googleusercontent.com/d/1u8S_F6M6W6O6-N6U6U6U6U6U6U6U6U6U" class="foto-gato">
-        <h2>💩 ¡TU REGALO ES EL INSTAGRAM DE ESTE FAMOSO! 💩</h2>
-    </div>
+    <audio id="sonido" src="https://www.myinstants.com/media/sounds/fart-meme-sound.mp3"></audio>
 
     <script>
-        let bromaActivada = false;
-
-        function lanzarBroma() {
-            if (bromaActivada) return;
-            bromaActivada = true;
-
-            // 1. Pantalla completa
+        function ejecutarBroma() {
             const doc = document.documentElement;
-            if (doc.requestFullscreen) doc.requestFullscreen();
+            const audio = document.getElementById("sonido");
+            const mensaje = document.getElementById("mensaje");
 
-            // 2. Cambiar interfaz
-            document.getElementById('pantalla-inicio').style.display = 'none';
-            document.getElementById('pantalla-broma').style.display = 'flex';
+            // 1. Intentar poner pantalla completa
+            if (doc.requestFullscreen) {
+                doc.requestFullscreen();
+            }
 
-            // 3. AUDIO REFORZADO (Web Audio API para volumen máximo)
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            
-            // Usamos un sonido gracioso de la red
-            fetch('https://www.myinstants.com/media/sounds/fart-meme-sound.mp3')
-                .then(response => response.arrayBuffer())
-                .then(data => audioCtx.decodeAudioData(data))
-                .then(buffer => {
-                    const source = audioCtx.createBufferSource();
-                    source.buffer = buffer;
-                    source.loop = true;
+            // 2. Cambiar diseño a negro y ocultar ratón
+            document.body.classList.add('pantalla-negra');
+            mensaje.style.display = 'none';
 
-                    // Nodo de ganancia (Amplificador)
-                    const gainNode = audioCtx.createGain();
-                    gainNode.gain.value = 10; // MULTIPLICA EL VOLUMEN (Cuidado: distorsiona mucho)
-
-                    source.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                    source.start(0);
-                });
+            // 3. Reproducir sonido al máximo volumen del navegador
+            audio.volume = 1.0; 
+            audio.play();
         }
     </script>
 </body>
