@@ -1,29 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Broma para tu amigo</title>
+    <title>¡Sorpresa!</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: black; display: flex; justify-content: center; align-items: center; }
+        img { width: 100vw; height: 100vh; object-fit: contain; }
     </style>
 </head>
 <body>
-    <img src="https://villano.fandom.com/es/wiki/Sid_Phillips" alt="Broma para tu amigo">
+    <img src="https://static.wikia.nocookie.net/disney/images/d/d4/Sid_Phillips_Transparent.png" alt="Sid">
     <script>
-        window.onbeforeunload = function() {
-            return '';
-        };
+        window.onbeforeunload = function() { return "¡No te vayas!"; };
     </script>
 </body>
 </html>
