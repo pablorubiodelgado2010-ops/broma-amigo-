@@ -3,38 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA BLOQUEADO</title>
+    <title>Regalo Especial</title>
     <style>
-        body, html { 
-            margin: 0; padding: 0; height: 100%; width: 100%; 
-            overflow: hidden; background-color: black; 
-            display: flex; justify-content: center; align-items: center;
-            cursor: none; /* Esconde el ratón para que parezca bloqueado */
+        /* Estilos de la página inicial */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
         }
-        img { width: 100%; height: 100%; object-fit: contain; }
+
+        #contenedor {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 85%;
+            max-height: 60vh;
+            border: 10px solid #eee;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 25px;
+            font-size: 24px;
+        }
+
+        /* Clase para el modo broma (pantalla negra y sin ratón) */
+        .negro-total {
+            background-color: black !important;
+            cursor: none !important;
+        }
+
+        .oculto {
+            display: none !important;
+        }
     </style>
 </head>
-<body onclick="entrarPantallaCompleta()">
+<body onclick="activarBroma()">
 
-    <img src="https://upload.wikimedia.org/wikipedia/en/d/d8/Sid_Toy_Story.png" alt="Sid">
+    <div id="contenedor">
+        <img src="https://r.jina.ai/i/0f3c5b8b8b8b4b8b8b8b8b8b8b8b8b8b" alt="Día del padre">
+        <h1>🎁 ¡Haz clic para abrir tu regalo del Día del Padre! 🎁</h1>
+    </div>
+
+    <audio id="audioBroma" src="https://www.myinstants.com/media/sounds/fart-meme-sound.mp3" loop></audio>
 
     <script>
-        // Al hacer clic en cualquier parte, se pone en pantalla completa
-        function entrarPantallaCompleta() {
-            var el = document.documentElement;
-            if (el.requestFullscreen) el.requestFullscreen();
-            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        function activarBroma() {
+            const doc = document.documentElement;
+            const audio = document.getElementById("audioBroma");
+            const contenedor = document.getElementById("contenedor");
+
+            // 1. Activar Pantalla Completa
+            if (doc.requestFullscreen) {
+                doc.requestFullscreen();
+            } else if (doc.webkitRequestFullscreen) { /* Safari */
+                doc.webkitRequestFullscreen();
+            }
+
+            // 2. Poner fondo negro y ocultar todo lo demás
+            document.body.classList.add("negro-total");
+            contenedor.classList.add("oculto");
+
+            // 3. Reproducir sonido al máximo (del navegador)
+            audio.volume = 1.0;
+            audio.play();
         }
-
-        // Bloqueo de teclado (evita F12 y otras teclas comunes)
-        document.onkeydown = function (e) {
-            return false;
-        };
-
-        // El mensaje de "No puedes salir" que le hará perder tiempo
-        window.onbeforeunload = function() {
-            return "ERROR CRÍTICO: El sistema no responde. ¿Deseas forzar el cierre?";
-        };
     </script>
 </body>
 </html>
