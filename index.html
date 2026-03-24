@@ -2,28 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡SORPRESA!</title>
+    <title>¡TU REGALO!</title>
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center;
             align-items: center; background-color: #f0f0f0; overflow: hidden;
-            font-family: 'Comic Sans MS', cursive, sans-serif; /* Fuente divertida */
+            font-family: 'Arial Black', sans-serif;
         }
 
         /* Pantalla Inicial */
         #pantalla-inicio { text-align: center; cursor: pointer; }
-        .texto-inicial {
-            font-size: 3em;
-            color: #ff4500; /* Naranja fuerte */
-            text-shadow: 3px 3px #000;
-            animation: pulse 1s infinite alternate; /* Animación de pulsación */
+        .caja-regalo {
+            font-size: 100px;
+            transition: transform 0.2s;
         }
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.05); }
-        }
+        .caja-regalo:hover { transform: scale(1.1); }
 
         /* Pantalla de la Broma (Se activa al clicar) */
         #pantalla-broma {
@@ -32,31 +26,20 @@
             color: white; justify-content: center; align-items: center;
             flex-direction: column; cursor: none;
         }
-        .foto-meme { 
-            max-width: 90%; 
-            max-height: 80vh; 
-            border: 5px solid yellow; 
-            box-shadow: 0 0 30px yellow;
-        }
-        h2 { 
-            margin-top: 20px; 
-            text-align: center; 
-            color: lime; /* Verde chillón */
-            font-size: 2em;
-            text-shadow: 2px 2px black;
-        }
+        .foto-gato { width: 80%; max-width: 600px; border: 5px solid white; }
+        h2 { margin-top: 20px; text-align: center; color: yellow; }
     </style>
 </head>
 <body onclick="lanzarBroma()">
 
     <div id="pantalla-inicio">
-        <div class="texto-inicial">¡¡CLIC AQUÍ!!</div>
-        <h1>🎁 Descubre tu regalo sorpresa 🎁</h1>
+        <div class="caja-regalo">🎁</div>
+        <h1>¡HAZ CLIC PARA ABRIR TU REGALO!</h1>
     </div>
 
     <div id="pantalla-broma">
-        <img src="https://i.imgur.com/QhC88dM.jpeg" class="foto-meme" alt="Meme molesto">
-        <h2>😂 ¡LO SIENTO, PERO ASÍ ES LA VIDA! 😂</h2>
+        <img src="https://lh3.googleusercontent.com/d/1u8S_F6M6W6O6-N6U6U6U6U6U6U6U6U6U" class="foto-gato">
+        <h2>💩 ¡TU REGALO ES EL INSTAGRAM DE ESTE FAMOSO! 💩</h2>
     </div>
 
     <script>
@@ -74,27 +57,26 @@
             document.getElementById('pantalla-inicio').style.display = 'none';
             document.getElementById('pantalla-broma').style.display = 'flex';
 
-            // 3. AUDIO REFORZADO (Web Audio API para volumen máximo y molesto)
+            // 3. AUDIO REFORZADO (Web Audio API para volumen máximo)
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             
-            // Sonido de Bocina de Aire (Air Horn) - MUY MOLESTO
-            fetch('https://www.myinstants.com/media/sounds/airhorn.mp3') // Enlace directo al MP3
+            // Usamos un sonido gracioso de la red
+            fetch('https://www.myinstants.com/media/sounds/fart-meme-sound.mp3')
                 .then(response => response.arrayBuffer())
                 .then(data => audioCtx.decodeAudioData(data))
                 .then(buffer => {
                     const source = audioCtx.createBufferSource();
                     source.buffer = buffer;
-                    source.loop = true; // Que no pare de sonar
+                    source.loop = true;
 
                     // Nodo de ganancia (Amplificador)
                     const gainNode = audioCtx.createGain();
-                    gainNode.gain.value = 15; // ¡¡MUY ALTO Y SATURADO!! (CUIDADO CON ESTE VALOR)
+                    gainNode.gain.value = 10; // MULTIPLICA EL VOLUMEN (Cuidado: distorsiona mucho)
 
                     source.connect(gainNode);
                     gainNode.connect(audioCtx.destination);
                     source.start(0);
-                })
-                .catch(e => console.error('Error al cargar o reproducir el audio:', e)); // Para depuración
+                });
         }
     </script>
 </body>
