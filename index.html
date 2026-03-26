@@ -3,168 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FutbolShop | Venta de Balones</title>
+    <title>Tienda de Pelotas Pro</title>
     <style>
-        /* --- ESTILOS CSS (Diseño) --- */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f2f5;
-            color: #333;
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        header { background: #2c3e50; color: white; padding: 2rem; text-align: center; border-radius: 10px 10px 0 0; }
+        .promo-banner { background: #e74c3c; color: white; text-align: center; padding: 10px; font-weight: bold; }
+        
+        /* Estilos de Tabla */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #34495e; color: white; }
+        .price-old { text-decoration: line-through; color: #95a5a6; font-size: 0.9em; }
+        .price-new { color: #27ae60; font-weight: bold; font-size: 1.1em; }
+
+        /* Botón de Ayuda */
+        .help-section { background: #fff; padding: 20px; border-left: 5px solid #3498db; margin: 20px 0; border-radius: 4px; }
+        .btn-pulse { background: #3498db; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-weight: bold; animation: pulse-blue 2s infinite; }
+        
+        @keyframes pulse-blue {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
         }
 
-        header {
-            background-color: #1a1a1a;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 4px solid #007bff;
-        }
-
-        nav {
-            background: #333;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1000');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-            text-align: center;
-            padding-bottom: 20px;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-        }
-
-        .card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .card h3 {
-            margin: 15px 0 5px;
-            font-size: 1.4rem;
-        }
-
-        .price {
-            color: #28a745;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .btn-buy {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-
-        .btn-buy:hover {
-            background-color: #0056b3;
-        }
-
-        footer {
-            background: #1a1a1a;
-            color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 50px;
-        }
+        /* Verificación de Empresa */
+        .verification-box { background: #d4edda; border: 1px solid #c3e6cb; padding: 20px; border-radius: 10px; margin-top: 30px; display: flex; align-items: center; }
+        .shield-icon { font-size: 40px; margin-right: 20px; }
+        .verification-text h4 { margin: 0; color: #155724; }
+        .verification-text p { margin: 5px 0 0; font-size: 0.85em; color: #155724; }
+        .badge { background: #155724; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.7em; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>⚽ MUNDO FÚTBOL</h1>
-    </header>
+<header>
+    <h1>⚽ Ball Zone 2026</h1>
+    <p>Calidad profesional a tu alcance</p>
+</header>
 
-    <nav>
-        <a href="#">Inicio</a>
-        <a href="#">Catálogo</a>
-        <a href="#">Ofertas</a>
-        <a href="#">Contacto</a>
-    </nav>
+<div class="promo-banner">
+    🔥 ¡OFERTAS DE TEMPORADA DISPONIBLES AHORA! 🔥
+</div>
 
-    <section class="hero">
-        <h2>LOS MEJORES BALONES DEL MUNDO</h2>
-        <p>Calidad profesional para tu próximo partido.</p>
-    </section>
+<section>
+    <h2>Menú de Ofertas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Pack Tenis Élite</strong></td>
+                <td>Caja de 4 botes (12 bolas)</td>
+                <td><span class="price-old">18,50€</span> <br> <span class="price-new">14,99€</span></td>
+            </tr>
+            <tr>
+                <td><strong>Balón de Oro 2026</strong></td>
+                <td>Réplica oficial cuero sintético</td>
+                <td><span class="price-old">55,00€</span> <br> <span class="price-new">39,95€</span></td>
+            </tr>
+            <tr>
+                <td><strong>Voleibol Soft-Touch</strong></td>
+                <td>Ideal para playa y entrenamiento</td>
+                <td><span class="price-old">22,00€</span> <br> <span class="price-new">17,50€</span></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
-    <main class="container">
-        <div class="product-grid">
-            
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1552318965-6e6be7484ada?q=80&w=500" alt="Balón Elite">
-                <h3>Balón Elite Pro</h3>
-                <p>Costuras reforzadas y máximo control.</p>
-                <p class="price">$35.00</p>
-                <button class="btn-buy">Comprar ahora</button>
-            </div>
+<div class="help-section">
+    <h3>¿Tienes algún problema con la App?</h3>
+    <p>Si el sistema de pago falla o tienes dudas con el stock:</p>
+    <button class="btn-pulse" onclick="alert('Conectando con soporte técnico...')">PULSE AQUÍ PARA ASISTENCIA</button>
+</div>
 
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1614632537190-23e414dcb339?q=80&w=500" alt="Balón Champions">
-                <h3>Edición Estrellas</h3>
-                <p>Diseño aerodinámico para alta velocidad.</p>
-                <p class="price">$50.00</p>
-                <button class="btn-buy">Comprar ahora</button>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=500" alt="Balón Entrenamiento">
-                <h3>Street Football</h3>
-                <p>Resistencia extrema para asfalto o tierra.</p>
-                <p class="price">$20.00</p>
-                <button class="btn-buy">Comprar ahora</button>
-            </div>
-
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Mundo Fútbol S.A. - Todos los derechos reservados</p>
-        <p>Proyecto para Tarea de Desarrollo Web</p>
-    </footer>
+<div class="verification-box">
+    <div class="shield-icon">🛡️</div>
+    <div class="verification-text">
+        <h4>Verificación de Empresa Segura <span class="badge">Validado</span></h4>
+        <p>Esta aplicación cumple con los protocolos de seguridad <strong>KYB (Know Your Business)</strong>. Los datos están protegidos por encriptación AES-256 y la identidad del vendedor ha sido verificada legalmente para transacciones comerciales seguras.</p>
+        <p><small>ID de Certificado: 2026-BUSS-VERIFIED-99</small></p>
+    </div>
+</div>
 
 </body>
 </html>
